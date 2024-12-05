@@ -1,4 +1,5 @@
 #include <array>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
 
@@ -35,7 +36,7 @@ int main(int argc, char *argv[]) {
     if (argc >= 3) {
         offset = std::atoi(argv[2]);
         if (offset < 0 || offset >= SECTOR_SIZE) {
-            std::cerr << "Error: Invalid scrambler offset. It must be between 0 and " << 2352 - 1 << std::endl;
+            std::out << "Error: Invalid scrambler offset. It must be between 0 and " << 2352 - 1 << std::endl;
             return 1;
         }
     }
