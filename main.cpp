@@ -19,19 +19,15 @@ static constexpr auto ECMA_130 = []() {
 }();
 
 int main(int argc, char *argv[]) {
+    // Print help text if no inputs given
     if (argc < 2) {
         std::cout << "ECMA-130 Scrambler/Descrambler (Deterous, 2024)"<< std::endl;
         std::cout << "Usage: scramble <file_path> [scrambler_offset = 0]" << std::endl;
         return 1;
     }
 
+    // Parse inputs
     const char* path = argv[1];
-    std::fstream file(path, std::ios::in | std::ios::out | std::ios::binary);
-    if (!file) {
-        std::cout << "Error: Could not open file " << path << std::endl;
-        return 1;
-    }
-
     int offset = 0;
     if (argc >= 3) {
         offset = std::atoi(argv[2]);
@@ -41,6 +37,14 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    // Open file for reading and writing
+    std::fstream file(path, std::ios::in | std::ios::out | std::ios::binary);
+    if (!file) {
+        std::cout << "Error: Could not open file " << path << std::endl;
+        return 1;
+    }
+
+    // Scramble file one sector at a time
     char sector[SECTOR_SIZE];
     std::streampos pos = 0;
     while (!file.eof()) {
